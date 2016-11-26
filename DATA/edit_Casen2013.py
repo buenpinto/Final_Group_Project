@@ -37,10 +37,10 @@ casen2013["education_level_5"] = casen2013["education_level"].apply(lambda x: 5 
 casen2013["education_level_6"] = casen2013["education_level"].apply(lambda x: 6 if x=="educación básica"  else 0)
 casen2013["education_level_7"] = casen2013["education_level"].apply(lambda x: 7 if x=="humanidades (sistema antiguo)"  else 0)
 casen2013["education_level_8"] = casen2013["education_level"].apply(lambda x: 8 if x=="educación media científico-humanista"  else 0)
-casen2013["education_level_9"] = casen2013["education_level"].apply(lambda x: 9 if x=="técnica, comercial, industrial o normalista (sistema antiguo) "  else 0)
+casen2013["education_level_9"] = casen2013["education_level"].apply(lambda x: 9 if x=="técnica, comercial, industrial o normalista (sistema antiguo)"  else 0)
 casen2013["education_level_10"] = casen2013["education_level"].apply(lambda x: 10 if x=="educación media técnica profesional"  else 0)
 casen2013["education_level_11"] = casen2013["education_level"].apply(lambda x: 11 if x=="técnico nivel superior (carreras de 1 a 3 años)"  else 0)
-casen2013["education_level_12"] = casen2013["education_level"].apply(lambda x: 12 if x=="profesional (carreras de 4 o más años) "  else 0)
+casen2013["education_level_12"] = casen2013["education_level"].apply(lambda x: 12 if x=="profesional (carreras de 4 o más años)"  else 0)
 casen2013["education_level_13"] = casen2013["education_level"].apply(lambda x: 13 if x=="postgrado"  else 0)
 
 casen2013["education_level_tot"]= casen2013["education_level_0"]
@@ -63,10 +63,12 @@ casen2013.rename(columns={"education_level_tot":"education_level", "total_income
 
 
 
-#print(casen2013)
 
 casen2013.to_csv("Casen_2013_final.csv")
 
 casen2013 = casen2013[["Comuna_ID","Region_ID", "education_level","employed", "total_income"]]
+
+#print(casen2013)
+
 
 casen2013.to_csv("Casen_2013_vars.csv")
