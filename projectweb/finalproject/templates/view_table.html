@@ -1,0 +1,33 @@
+{% extends "FP_template.html" %}
+
+{% block form %}
+
+
+<form action="{{ form_action }}"
+      method="{{ form_method }}">
+
+  {% if form_method == "post" %}
+    {% csrf_token %}
+  {% endif %}
+
+  {{ form.as_p }}
+</form>
+
+
+<form >
+
+<input type ="submit" value ="Home" >
+
+</input>
+
+
+</form>
+
+{% endblock %}
+
+
+{% block content %}
+
+{{ table | safe}}
+
+{% endblock %}

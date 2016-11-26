@@ -1,0 +1,111 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Poverty and Income Measurements in Chile </title>
+
+<!--Initial definitions for the style of some components -->
+<style>
+
+h1 {
+  color:brown;
+}
+
+h2 {
+  color: grey;
+}
+
+ul.nav {
+  background-color: #cc3300;
+  font-size: 30px;
+}
+
+ul.nav li {
+  display: inline;
+
+}
+
+ ul.nav li a {
+  display: inline-block;
+  text-decoration: none;
+  color:black;
+}
+
+table {
+  align: center;
+  border-width: 10px 0px;
+  border-style: solid;
+  border-color: darkgreen;
+  background: #eee;
+}
+
+div.plot {
+
+  float: right;
+  width: calc(100% - 200px);
+
+
+}
+
+div.form {
+
+  float: left;
+  width: 200px;
+
+}
+
+div.image {
+  align: center;
+  padding-left: 270px;
+}
+
+</style>
+
+
+</head>
+
+<body>
+
+<h1 align="center"> Poverty and Income Measurements in Chile  </h1>
+
+<ul class="nav">
+
+<li> <a href="http://127.0.0.1:8000/finalproject/Home"> Home </a> </li>
+<li> <a href="http://127.0.0.1:8000/finalproject/display_plot"> Time Series </a> </li>
+<li> <a href="http://127.0.0.1:8000/finalproject/display_table"> Tables </a> </li>
+<li> <a href="http://127.0.0.1:8000/finalproject/display_cross_sectional"> Cross Sectional Plots </a> </li>
+
+<li> <a href="#Maps"> Maps </a> </li>
+
+</ul>
+
+
+  <h2>{{ title }}</h2>
+
+<div class="image">
+{% block image %}
+
+{% endblock %}
+
+</div>
+
+<div id="parent">
+
+<div class="form">
+
+{% block form %}{% endblock %}
+
+</div>
+
+<div class="plot" >
+
+    {% block content %}{% endblock %}
+
+</div>
+
+</div>
+
+
+
+</html>
