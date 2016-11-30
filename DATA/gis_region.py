@@ -13,7 +13,7 @@ casen2013 = pd.read_csv("Casen_2013_vars.csv")
 casen2013 = casen2013.groupby("Comuna_ID")[["Region_ID", "education_level", "employed","total_income"]].mean()
 
 #chile_df = gpd.read_file("data/division_comunal.shp")
-chile_df = gpd.read_file("data/cl_comunas_geo.shp")
+chile_df = gpd.read_file("GIS_Data/cl_comunas_geo.shp")
 
 
 chile_df.rename(columns={'ID_2002':'Comuna_ID'}, inplace = True)
@@ -45,7 +45,7 @@ os.chdir("C:\cygwin64\home\Cristobal\Final_Group_Project\DATA\Maps")
 ################################################################################
 
 #The loop that generates the plots:
-for i in range(1, 14):
+for i in range(1, 2):
     com = chile_merged.index.tolist()[i]
     s = chile_merged.iloc[i]
     chile_merged["selection"] =chile_merged["Region_ID"].apply(lambda x: 1 if x==str(i)  else 0)

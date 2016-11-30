@@ -12,7 +12,7 @@ casen2013 = pd.read_csv("Casen_2013_vars.csv")
 casen2013 = casen2013.groupby("Comuna_ID")[["Region_ID", "education_level", "employed","total_income"]].mean()
 
 
-chile_df = gpd.read_file("data/cl_comunas_geo.shp")
+chile_df = gpd.read_file("GIS_Data/cl_comunas_geo.shp")
 
 
 chile_df.rename(columns={'ID_2002':'Comuna_ID'}, inplace = True)
