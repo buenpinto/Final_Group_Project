@@ -1,0 +1,41 @@
+{% extends "FP_template.html" %}
+
+{% load static %}
+
+###Include this link to the background image.
+{% block image %}
+<body background={{"https://s-media-cache-ak0.pinimg.com/564x/01/65/dd/0165dd0d8488be3ad52e72efe5299801.jpg"}}>
+
+{% endblock %}
+
+{% block form %}
+
+<form action="{{ form_action }}"
+      method="{{ form_method }}">
+
+  {% if form_method == "post" %}
+    {% csrf_token %}
+  {% endif %}
+
+  {{ form.as_p }}
+</form>
+
+
+<form >
+
+<input type ="submit" value ="Home" >
+
+</input>
+
+
+</form>
+
+{% endblock %}
+
+
+{% block content2 %}
+
+<img src="{% static link %}" width=65% align="center" />
+
+
+{% endblock %}

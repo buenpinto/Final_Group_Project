@@ -1,5 +1,12 @@
 {% extends "FP_template.html" %}
 
+{% load static %}
+
+{% block image %}
+<body background={{"http://cdn1.buuteeq.com/upload/2036233/puerto-de-valparaiso_3979-2.jpg.1920x807_default.jpg"}}>
+
+{% endblock %}
+
 {% block form %}
 
 
@@ -25,9 +32,8 @@
 </form>
 
 {% if cat %}
-    You have selected the {{ cat }} cathegory.
+  <h3>  You have selected the {{ cat }} cathegory. </h3>
 {% endif %}
-
 
 <form >
 
@@ -43,6 +49,13 @@
 
 {% block content %}
 
-  <img src= '{{ pic_county }}' width=75% />
+  <img src= '{{ pic_county }}' width=90% border="0" />
+
+{% endblock %}
+
+{% block map %}
+
+<img src="{% static link %}" width=110% />
+
 
 {% endblock %}

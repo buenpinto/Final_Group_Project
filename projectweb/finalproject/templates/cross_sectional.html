@@ -1,5 +1,12 @@
 {% extends "FP_template.html" %}
 
+###Include this link to the background image.
+{% block image %}
+
+<body background={{"https://elardaranibar.files.wordpress.com/2011/05/peru_1805.jpg"}}>
+
+{% endblock %}
+
 {% block form %}
 
 
@@ -32,6 +39,6 @@
 
 {% block content %}
 
-  <img src= '{{ plot }}' width=75% />
+  <img src= '{{ plot }}' width=85% />
 
 {% endblock %}

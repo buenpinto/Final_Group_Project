@@ -23,19 +23,24 @@ def index(request):
 
     return render(request, 'view_home.html', {'link':link})
 
+###############################################################################
 
 def table2013(request):
 
     filename = join(settings.STATIC_ROOT, 'finalproject/Casen_all_final_edit.csv')
 
-    casen_2013 = pd.read_csv(filename, usecols=["Comuna_ID","extreme_poverty_2013", "poverty_2013",
-    "no_poverty_2013", "total_income_2013", "region", "county_name"])
+    casen_2013 = pd.read_csv(filename, usecols=["region", "Comuna_ID","county_name", "extreme_poverty_2013", "poverty_2013",
+     "total_income_2013" ])
+
+    casen_2013.rename(columns={"region":"Region", "extreme_poverty_2013":"% Extremely Poor",
+    "poverty_2013":"% Poor","total_income_2013":"Average Household Income ($ CHP)",
+    "county_name":"County Name"}, inplace=True)
 
     region = request.GET.get('region', '')
 
     if not region: region = request.POST.get('region', '13')
 
-    region_casen_2013 = casen_2013.loc[casen_2013["region"]==int(region)]
+    region_casen_2013 = casen_2013.loc[casen_2013["Region"]==int(region)]
 
 
     table = region_casen_2013.to_html(float_format = "%.3f", classes = "table table-striped", index_names = False)
@@ -105,30 +110,6 @@ def cross_sectional2013(request, R=None, XVAR=None):
 
         return HttpResponse("We are sorry! This county/query is not in our data base")
 
-###############################################################################
-
-def display_cross_sectional(request):
-
-    region = request.GET.get('region','')
-    if not region:region = request.POST.get('region','13')
-
-    edu_pov = request.GET.get('edu_pov','')
-    if not edu_pov : edu_pov = request.POST.get('edu_pov','1')
-
-    return render(request, 'cross_sectional.html', {"title" : REGION_DICT[region],
-                                                "plot" : reverse_lazy("finalproject:cross_sectional2013",
-                                                kwargs={"R":region, "XVAR":edu_pov}),
-
-                                             'form_action' : reverse_lazy('finalproject:form') + "display_cross_sectional/",
-                                                 'form_method' : 'get',
-
-                                                'form' : REG_VAR({'region' : region}),
-                                                'region' : REGION_DICT[region],
-
-                                                'edu_pov'  : VAR_DICT[edu_pov],
-
-                                                               })
-
 
 ###############################################################################
 
@@ -168,7 +149,7 @@ def county(request, R=None, C=None, Cat=None):
                from io import BytesIO
                figfile =BytesIO()
 
-               plt.savefig(figfile, format='png')
+               plt.savefig(figfile, format='png', bbox_inches='tight')
                figfile.seek(0)
 
                return HttpResponse(figfile.read(), content_type="image/png")
@@ -186,7 +167,7 @@ def county(request, R=None, C=None, Cat=None):
                from io import BytesIO
                figfile =BytesIO()
 
-               plt.savefig(figfile, format='png')
+               plt.savefig(figfile, format='png', bbox_inches='tight')
                figfile.seek(0)
 
                return HttpResponse(figfile.read(), content_type="image/png")
@@ -195,10 +176,66 @@ def county(request, R=None, C=None, Cat=None):
 
                return HttpResponse("We are sorry! This county/query is not in our data base")
 
+
 ################################ DISPLAYS #######################################
 
 from .forms import InputForm, CAT, REG_VAR, C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13
 from .models import REGION_DICT, CAT_DICT, VAR_DICT, C1_DICT, C2_DICT, C3_DICT, C4_DICT, C5_DICT, C6_DICT, C7_DICT, C8_DICT, C9_DICT, C10_DICT, C11_DICT, C12_DICT, C13_DICT
+
+
+def display_cross_sectional(request):
+
+    region = request.GET.get('region','')
+    if not region:region = request.POST.get('region','13')
+
+    edu_pov = request.GET.get('edu_pov','')
+    if not edu_pov : edu_pov = request.POST.get('edu_pov','1')
+
+    return render(request, 'cross_sectional.html', {"title" : REGION_DICT[region],
+                                                "plot" : reverse_lazy("finalproject:cross_sectional2013",
+                                                kwargs={"R":region, "XVAR":edu_pov}),
+
+                                             'form_action' : reverse_lazy('finalproject:form') + "display_cross_sectional/",
+                                                 'form_method' : 'get',
+
+                                                'form' : REG_VAR({'region' : region}),
+                                                'region' : REGION_DICT[region],
+
+                                                'edu_pov'  : VAR_DICT[edu_pov],
+
+                                                               })
+
+###############################################################################
+
+def display_map(request):
+
+    region= request.GET.get('region', '')
+    if not region:region = request.POST.get('region','13')
+
+    link = "/finalproject/map_" + str(region) +".png"
+
+    return render(request, 'view_map.html', {"title":REGION_DICT[region],
+                                                "link":link,
+
+                                             'form_action' : reverse_lazy('finalproject:form') + "display_map/",
+                                             'form_method' : 'get',
+
+                                            'form' : InputForm({'region' : region}),
+                                            'region' : REGION_DICT[region],
+
+                                                       })
+
+
+
+
+
+
+
+
+
+
+###############################################################################
+
 
 def display_plot(request):
 
@@ -239,6 +276,7 @@ def display_plot(request):
         c1 = request.GET.get('c1','')
         if not c1: c1 = request.POST.get('c1','1101')
 
+        link = "/finalproject/map_" + str(c1) +".png"
         return render(request, 'view_county.html', {"title" :  REGION_DICT[region] +", County: " + C1_DICT[c1],
                                              "pic_county" : reverse_lazy("finalproject:county", kwargs={"R":region, "C":c1, "Cat":cat}),
 
@@ -253,7 +291,8 @@ def display_plot(request):
 
                                                        #'form_cat': Cat({'cat' : cat}),
                                                        'cat'  : CAT_DICT[cat],
-
+                                                       'link' : link,
+                                                       'c1':c1,
 
                                                        })
 
@@ -264,7 +303,7 @@ def display_plot(request):
 
         c2 = request.GET.get('c2','')
         if not c2: c2 = request.POST.get('c2','2101')
-
+        link = "/finalproject/map_" + str(c2) +".png"
         return render(request, 'view_county.html', {"title" :  REGION_DICT[region] +", County: " + C2_DICT[c2],
                                              "pic_county" : reverse_lazy("finalproject:county", kwargs={"R":region, "C":c2, "Cat":cat}),
 
@@ -279,7 +318,7 @@ def display_plot(request):
 
                                                        #'form_cat': Cat({'cat' : cat}),
                                                        'cat'  : CAT_DICT[cat],
-
+                                                        'link' : link,
 
                                                        })
 
@@ -292,6 +331,7 @@ def display_plot(request):
         c3 = request.GET.get('c3','')
         if not c3: c3 = request.POST.get('c3','3101')
 
+        link = "/finalproject/map_" + str(c3) +".png"
         return render(request, 'view_county.html', {"title" :  REGION_DICT[region] +", County: " + C3_DICT[c3],
                                              "pic_county" : reverse_lazy("finalproject:county", kwargs={"R":region, "C":c3, "Cat":cat}),
 
@@ -306,7 +346,7 @@ def display_plot(request):
 
                                                        #'form_cat': Cat({'cat' : cat}),
                                                        'cat'  : CAT_DICT[cat],
-
+                                                        'link' : link,
 
                                                        })
 
@@ -319,6 +359,7 @@ def display_plot(request):
         c4 = request.GET.get('c4','')
         if not c4: c4 = request.POST.get('c4','4101')
 
+        link = "/finalproject/map_" + str(c4) +".png"
         return render(request, 'view_county.html', {"title" :  REGION_DICT[region] +", County: " + C4_DICT[c4],
                                              "pic_county" : reverse_lazy("finalproject:county", kwargs={"R":region, "C":c4, "Cat":cat}),
 
@@ -333,7 +374,7 @@ def display_plot(request):
 
                                                        #'form_cat': Cat({'cat' : cat}),
                                                        'cat'  : CAT_DICT[cat],
-
+                                                        'link' : link,
 
                                                        })
 
@@ -346,6 +387,7 @@ def display_plot(request):
         c5 = request.GET.get('c5','')
         if not c5: c5 = request.POST.get('c5','5101')
 
+        link = "/finalproject/map_" + str(c5) +".png"
         return render(request, 'view_county.html', {"title" : REGION_DICT[region] +", County: " + C5_DICT[c5],
                                              "pic_county" : reverse_lazy("finalproject:county", kwargs={"R":region, "C":c5, "Cat":cat}),
 
@@ -360,6 +402,7 @@ def display_plot(request):
 
                                                        #'form_cat': Cat({'cat' : cat}),
                                                        'cat'  : CAT_DICT[cat],
+                                                       'link' : link,
 
 
                                                        })
@@ -373,6 +416,7 @@ def display_plot(request):
         c6 = request.GET.get('c6','')
         if not c6: c6 = request.POST.get('c6','6101')
 
+        link = "/finalproject/map_" + str(c6) +".png"
         return render(request, 'view_county.html', {"title" :  REGION_DICT[region] +", County: " + C6_DICT[c6],
                                              "pic_county" : reverse_lazy("finalproject:county", kwargs={"R":region, "C":c6, "Cat":cat}),
 
@@ -387,6 +431,7 @@ def display_plot(request):
 
                                                        #'form_cat': Cat({'cat' : cat}),
                                                        'cat'  : CAT_DICT[cat],
+                                                       'link' : link,
 
 
                                                        })
@@ -400,6 +445,7 @@ def display_plot(request):
         c7 = request.GET.get('c7','')
         if not c7: c7 = request.POST.get('c7','7101')
 
+        link = "/finalproject/map_" + str(c7) +".png"
         return render(request, 'view_county.html', {"title" :  REGION_DICT[region] +", County: " + C7_DICT[c7],
                                              "pic_county" : reverse_lazy("finalproject:county", kwargs={"R":region, "C":c7, "Cat":cat}),
 
@@ -414,6 +460,7 @@ def display_plot(request):
 
                                                        #'form_cat': Cat({'cat' : cat}),
                                                        'cat'  : CAT_DICT[cat],
+                                                       'link' : link,
 
 
                                                        })
@@ -427,6 +474,7 @@ def display_plot(request):
         c8 = request.GET.get('c8','')
         if not c8: c8 = request.POST.get('c8','8101')
 
+        link = "/finalproject/map_" + str(c8) +".png"
         return render(request, 'view_county.html', {"title" :   REGION_DICT[region] +", County: " + C8_DICT[c8],
                                              "pic_county" : reverse_lazy("finalproject:county", kwargs={"R":region, "C":c8, "Cat":cat}),
 
@@ -441,6 +489,7 @@ def display_plot(request):
 
                                                        #'form_cat': Cat({'cat' : cat}),
                                                        'cat'  : CAT_DICT[cat],
+                                                       'link' : link,
 
 
                                                        })
@@ -454,7 +503,7 @@ def display_plot(request):
         c9 = request.GET.get('c9','')
         if not c9: c9 = request.POST.get('c9','9101')
 
-
+        link = "/finalproject/map_" + str(c9) +".png"
         return render(request, 'view_county.html', {"title" :  REGION_DICT[region] +", County: " + C9_DICT[c9],
                                              "pic_county" : reverse_lazy("finalproject:county", kwargs={"R":region, "C":c9, "Cat":cat}),
 
@@ -469,6 +518,7 @@ def display_plot(request):
 
                                                        #'form_cat': Cat({'cat' : cat}),
                                                        'cat'  : CAT_DICT[cat],
+                                                       'link' : link,
 
 
                                                        })
@@ -480,7 +530,7 @@ def display_plot(request):
         c10 = request.GET.get('c10','')
         if not c10: c10 = request.POST.get('c10','10101')
 
-
+        link = "/finalproject/map_" + str(c10) +".png"
         return render(request, 'view_county.html', {"title" :   REGION_DICT[region] +", County: " + C10_DICT[c10],
                                              "pic_county" : reverse_lazy("finalproject:county", kwargs={"R":region, "C":c10, "Cat":cat}),
 
@@ -495,6 +545,7 @@ def display_plot(request):
 
                                                        #'form_cat': Cat({'cat' : cat}),
                                                        'cat'  : CAT_DICT[cat],
+                                                       'link' : link,
 
 
                                                        })
@@ -506,7 +557,7 @@ def display_plot(request):
         c11 = request.GET.get('c11','')
         if not c11: c11 = request.POST.get('c11','11101')
 
-
+        link = "/finalproject/map_" + str(c11) +".png"
         return render(request, 'view_county.html', {"title" :   REGION_DICT[region] +", County: " + C11_DICT[c11],
                                              "pic_county" : reverse_lazy("finalproject:county", kwargs={"R":region, "C":c11, "Cat":cat}),
 
@@ -521,6 +572,7 @@ def display_plot(request):
 
                                                        #'form_cat': Cat({'cat' : cat}),
                                                        'cat'  : CAT_DICT[cat],
+                                                       'link' : link,
 
 
                                                        })
@@ -532,7 +584,7 @@ def display_plot(request):
         c12 = request.GET.get('c12','')
         if not c12: c12 = request.POST.get('c12','12101')
 
-
+        link = "/finalproject/map_" + str(c12) +".png"
         return render(request, 'view_county.html', {"title" :  REGION_DICT[region] +", County: " + C12_DICT[c12],
                                              "pic_county" : reverse_lazy("finalproject:county", kwargs={"R":region, "C":c12, "Cat":cat}),
 
@@ -547,6 +599,7 @@ def display_plot(request):
 
                                                        #'form_cat': Cat({'cat' : cat}),
                                                        'cat'  : CAT_DICT[cat],
+                                                       'link' : link,
 
 
                                                        })
@@ -558,6 +611,7 @@ def display_plot(request):
         c13 = request.GET.get('c13','')
         if not c13: c13 = request.POST.get('c13','13101')
 
+        link = "/finalproject/map_" + str(c13) +".png"
         return render(request, 'view_county.html', {"title" :  REGION_DICT[region] +", County: " + C13_DICT[c13],
                                              "pic_county" : reverse_lazy("finalproject:county", kwargs={"R":region, "C":c13, "Cat":cat}),
 
@@ -572,6 +626,7 @@ def display_plot(request):
 
                                                        #'form_cat': Cat({'cat' : cat}),
                                                        'cat'  : CAT_DICT[cat],
+                                                       'link' : link,
 
 
                                                        })

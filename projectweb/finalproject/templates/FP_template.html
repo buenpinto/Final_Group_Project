@@ -1,49 +1,116 @@
 {% load staticfiles %}
+{% load static %}
 
 <!DOCTYPE html>
 <html>
 <head>
   <title> Poverty and Income Measurements in Chile </title>
 
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:600,500,400,300,200,100,400italic0&subset=latin,greek,latin-ext' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.8.1.min.js"></script>
+  <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.8.1.min.css">
+<!--Initial definitions for the style of some components -->
+
 <!--Initial definitions for the style of some components -->
 <style>
+* { font-family: 'Open Sans', sans-serif; }
 
-h1 {
-  color:brown;
-}
+body {margin: 3% 3%;}
 
-h2 {
-  color: grey;
-}
+
 
 ul.nav {
-  background-color: #cc3300;
-  font-size: 30px;
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+  overflow: auto;
+  background-color: #FFBE33;
 }
 
-ul.nav li {
-  display: inline;
+ul.nav li { float: left; }
 
-}
-
- ul.nav li a {
+ul.nav li a {
   display: inline-block;
+  color: white;
+  padding: 10px 20px;
   text-decoration: none;
-  color:black;
+  font-size: 24px;
+}
+
+ul.nav li a.active {
+  color: darkred;
+  background-color: #FFF;
+  font-weight: bold;
+}
+
+ul.nav li:hover {
+  background-color: #555;
+  transition: 0.5s;
+}
+
+img {
+  border: 3px;
+  border-style: solid;
+  border-color: darkred;
+  margin: 0px 40px;
 }
 
 table {
   align: center;
-  border-width: 10px 0px;
+  border-width: 1px 0px;
   border-style: solid;
-  border-color: darkgreen;
-  background: #eee;
+  border-color: #FFBE33;
+  background: #FFF6AD;
+  padding: 10px;
+  border-spacing: 10px;
+}
+
+th {
+  color: white;
+  background-color: #FFBE33;
+}
+th, td {
+  text-align: left;
+  padding: 3px 15px;
+}
+h1 {
+  color: white;
+  display: block;
+  font-size: 5em;
+  margin-top: 0.67em;
+  margin-bottom: 0.67em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+h2 {
+  align:center;
+  color:red;
+
+}
+
+h3 {
+
+  color:red;
+  font-size: 1.2em;
+}
+
+div.parent {
+
+width: 100%;
+
 }
 
 div.plot {
 
-  float: right;
-  width: calc(100% - 200px);
+  text-align: center;
+  float: left;
+  position: relative;
+  width: 65%;
 
 
 }
@@ -51,13 +118,36 @@ div.plot {
 div.form {
 
   float: left;
-  width: 200px;
+  position: relative;
+  width: 15%;
+
 
 }
 
-div.image {
+div.map {
+
+  text-align: center;
+  float: left;
+  position: relative;
+  width: 20%;
+  margin-top:0px;
+  opacity: 0.2;
+
+}
+div.map:hover {
+
+  opacity: 0.8;
+}
+
+div.map2 {
+
   align: center;
-  padding-left: 270px;
+  opacity: 0.7;
+
+}
+div.map2:hover {
+
+  opacity: 0.9;
 }
 
 </style>
@@ -76,7 +166,7 @@ div.image {
 <li> <a href="http://127.0.0.1:8000/finalproject/display_table"> Tables </a> </li>
 <li> <a href="http://127.0.0.1:8000/finalproject/display_cross_sectional"> Cross Sectional Plots </a> </li>
 
-<li> <a href="#Maps"> Maps </a> </li>
+<li> <a href="http://127.0.0.1:8000/finalproject/display_map"> Maps </a> </li>
 
 </ul>
 
@@ -84,13 +174,14 @@ div.image {
   <h2>{{ title }}</h2>
 
 <div class="image">
+
 {% block image %}
 
 {% endblock %}
 
 </div>
 
-<div id="parent">
+<div class="parent">
 
 <div class="form">
 
@@ -101,6 +192,23 @@ div.image {
 <div class="plot" >
 
     {% block content %}{% endblock %}
+
+<div class="map2">
+
+        {% block content2 %}{% endblock %}
+
+</div>
+
+</div>
+
+
+<div class ="map">
+
+  {% block map %}
+
+
+
+  {% endblock %}
 
 </div>
 

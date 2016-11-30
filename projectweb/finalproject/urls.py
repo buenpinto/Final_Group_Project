@@ -15,6 +15,11 @@ urlpatterns = [
     url(r'display_table/$', views.table2013, name='display_table'),
 
 
+    url(r'^$', views.display_map, name ='display_map'),
+
+    url(r'display_map/$', views.display_map, name='display_map'),
+
+
     #Cross sectional plots section
     #url(r'^$', views.cross_sectional2013, name='cross_sectional2013'),
     url(r'(?P<R>[0-9]+)/(?P<XVAR>[0-9]+)/CS$', views.cross_sectional2013, name='cross_sectional2013'),
