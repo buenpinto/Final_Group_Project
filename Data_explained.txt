@@ -40,12 +40,16 @@ We also have in this folder the output data from the previous scripts:
 
 - Casen_all_final.csv --> merged data base; output from merge_all.py
 - Casen_all_final_edit.csv --> same as Casen_all_final.csv, but without some characters 
-			      (á,é,í,ó, ú, ñ) that were causing import problems with the 
+			      (Ã¡,Ã©,Ã­,Ã³, Ãº, Ã±) that were causing import problems with the 
 			       "join(settings.STATIC_ROOT,.." instruction in django
 - Casen_2013_vars.csv --> cleaned Casen2013 data base with additional education and 
 			  employment level variables(used on our "Cross sectional" section). 
 
 
-Finally, the folder "Maps" inside the DATA folder contains the county and regional maps generated
-by the gis.py and gis_region.py scripts.
+Finally, 
+
+-The folder "MAPS", located inside the DATA folder, contains the county and regional maps generated
+by the gis.py and gis_region.py scripts. 
+-The foler "GIS_Data" (also inside the DATA folder) contains the raw shapefiles imported 
+to generate the map images through gis.py and gis_region.py.
 
