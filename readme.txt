@@ -1,4 +1,4 @@
-Our site is currently online and can be seen by following link below:
+Our site is currently online and can be seen by following the link below:
 
 http://carlofer.pythonanywhere.com/finalproject/Home/
 
