@@ -1,6 +1,10 @@
+# In this section we import the dictionaries defined in modules.py
+# and define all the forms we will use in views.py
+
 from django import forms
 from .models import Input, REGION, CAT, VAR, C1, C2, C3, C4, C5 , C6, C7, C8, C9, C10, C11, C12, C13
 
+############################### REGION FORM ####################################
 class InputForm(forms.ModelForm):
 
     attrs = {'class ' : 'form−control ',
@@ -17,7 +21,9 @@ class InputForm(forms.ModelForm):
         model = Input
         fields = ['region']
 
-#########################################################################
+########## DUAL FORM: region + edu_pov(Education/Poverty) #####################
+
+# This is the (dual) form used on the Cross Sectional Plots section
 
 class REG_VAR(forms.ModelForm):
 
@@ -38,7 +44,9 @@ class REG_VAR(forms.ModelForm):
         fields = ['region','edu_pov']
 
 
-###############################################################################
+########## DUAL FORM: county1 + cat(Poverty/Income) ###########################
+
+# The following (dual) forms, from C1 to C13, are used on the Time series plots section
 
 class C1(forms.ModelForm):
 

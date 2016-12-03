@@ -1,13 +1,15 @@
 {% extends "FP_template.html" %}
 
+<!--We load static in order to load the map images from ~static/finalproject-->
 {% load static %}
 
-###Include this link to the background image.
+<!--Include this link to the background image.-->
 {% block image %}
 <body background={{"https://s-media-cache-ak0.pinimg.com/564x/01/65/dd/0165dd0d8488be3ad52e72efe5299801.jpg"}}>
 
 {% endblock %}
 
+<!--standard form definition on html-->
 {% block form %}
 
 <form action="{{ form_action }}"
@@ -32,8 +34,11 @@
 
 {% endblock %}
 
+<!--block for the cloropleth maps-->
 
 {% block content2 %}
+
+<!--This instruction makes it possible to load the maps, using the {{ link }} variable rendered from display_plot()-->
 
 <img src="{% static link %}" width=65% align="center" />
 

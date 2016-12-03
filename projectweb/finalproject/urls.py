@@ -6,39 +6,39 @@ app_name = 'finalproject'
 urlpatterns = [
 
 ###############################################################################
-    #Index
+    #Index (Site URL)
     url(r'Home/$', views.index, name ='home'),
 
-    #Table section
+############################# TABLE SECTION #####################################
+    #ROOT
     url(r'^$', views.table2013, name ='table2013'),
-
+    #Site URL
     url(r'display_table/$', views.table2013, name='display_table'),
 
-
+############################# MAPS SECTION ######################################
+    #ROOT
     url(r'^$', views.display_map, name ='display_map'),
-
+    #Site URL
     url(r'display_map/$', views.display_map, name='display_map'),
 
-
-    #Cross sectional plots section
-    #url(r'^$', views.cross_sectional2013, name='cross_sectional2013'),
+############################# CROSS SECTIONAL PLOTS SECTION ####################
+    #ROOT
     url(r'(?P<R>[0-9]+)/(?P<XVAR>[0-9]+)/CS$', views.cross_sectional2013, name='cross_sectional2013'),
-
-    #url(r'^$', views.display_cross_sectional, name='display_cross_sectional'),
-
+    #Site URL
     url(r'display_cross_sectional/$', views.display_cross_sectional, name='display_cross_sectional'),
 
-    #url(r'display_cross_sectional/$', views.cross_sectional2013, name='cross_sectional2013'),
 
+############################# TIME SERIES PLOTS SECTION ########################
 
-
-    #County plots sections
+    #ROOT
     url(r'^$', views.county, name ='county'),
+    #PARAMETERS
     url(r'(?P<R>[0-9]+)/(?P<C>[0-9]+)/(?P<Cat>[0-9]+)/$', views.county, name ='county'),
-
+    #Site URL
     url(r'display_plot/$', views.display_plot, name='display_plot'),
 
-    #Forms
+#################################### OTHERS ##################################
+    #Form
     url(r'^$', views.form, name ='form'),
 ##############################################################################
 

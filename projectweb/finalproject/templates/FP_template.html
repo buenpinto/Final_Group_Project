@@ -161,6 +161,9 @@ div.map2:hover {
 
 <ul class="nav">
 
+  <!--Navigation bar, with links to each sections URLs -->
+
+
 <li> <a href="http://127.0.0.1:8000/finalproject/Home"> Home </a> </li>
 <li> <a href="http://127.0.0.1:8000/finalproject/display_plot"> Time Series </a> </li>
 <li> <a href="http://127.0.0.1:8000/finalproject/display_table"> Tables </a> </li>
@@ -175,6 +178,8 @@ div.map2:hover {
 
 <div class="image">
 
+<!--First block, each section's background image -->
+
 {% block image %}
 
 {% endblock %}
@@ -185,15 +190,21 @@ div.map2:hover {
 
 <div class="form">
 
+<!--Second  block, for the form(s) -->
+
 {% block form %}{% endblock %}
 
 </div>
 
 <div class="plot" >
 
+<!--Third block, for the content (plots, mainly) -->
+
     {% block content %}{% endblock %}
 
 <div class="map2">
+
+<!--Fourth block, for the cloropleth maps in view_map.html -->
 
         {% block content2 %}{% endblock %}
 
@@ -204,9 +215,9 @@ div.map2:hover {
 
 <div class ="map">
 
+<!--Fifth block, for the county maps in view_county.html (to the right of the plots)-->
+
   {% block map %}
-
-
 
   {% endblock %}
 

@@ -1,12 +1,15 @@
 {% extends "FP_template.html" %}
 
+<!--We load static in order to load the map images from ~static/finalproject-->
 {% load static %}
 
+<!--Include this link to the background image.-->
 {% block image %}
 <body background={{"http://cdn1.buuteeq.com/upload/2036233/puerto-de-valparaiso_3979-2.jpg.1920x807_default.jpg"}}>
 
 {% endblock %}
 
+<!--standard form definition on html-->
 {% block form %}
 
 
@@ -46,14 +49,18 @@
 
 {% endblock %}
 
-
+<!--we pass the plot variable '{{ pic_county }}' into this block as an image-->
 {% block content %}
 
   <img src= '{{ pic_county }}' width=90% border="0" />
 
 {% endblock %}
 
+<!--block for the county maps-->
+
 {% block map %}
+
+<!--This instruction makes it possible to load the maps, using the {{ link }} variable rendered from display_plot()-->
 
 <img src="{% static link %}" width=110% />
 

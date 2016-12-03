@@ -1,7 +1,7 @@
 from django.db import models
 
 
-# Create your models here.
+# Define the dictionaries for Regions, Categories, variables, and counties ( one per region)
 
 REGION = (
     ('1', 'I Region'),
@@ -225,6 +225,8 @@ C10_DICT = dict(C10)
 C11_DICT = dict(C11)
 C12_DICT = dict(C12)
 C13_DICT = dict(C13)
+
+# Defines the models
 
 class Input(models.Model):
 
