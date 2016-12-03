@@ -26,14 +26,14 @@ the county divisions in Chile. This are, for each year:
 
 The folder also contains some python scripts, that were used to:
 
-(i)  - merge_all.py --> merge and clean all the Casen surveys (2006 to 2013)
-(ii) - editCasen2013.py --> import some extra variables from the Casen_2013.csv 
+(i)  merge_all.py --> merge and clean all the Casen surveys (2006 to 2013)
+(ii) editCasen2013.py --> import some extra variables from the Casen_2013.csv 
                             file to use on our "Cross sectional" section. (see 
 			    "display_cross_sectional" and "cross_sectional2013" 
 			    views on views.py)
-(iii) - gis.py -->       generates a map of Chile as "map_county_code.png" that shows the given 
+(iii) gis.py -->       generates a map of Chile as "map_county_code.png" that shows the given 
 		         county (the "selected" county) in a different color.
-(iv) - gis_region.py --> generates regional cloropleth maps of Chile (i.e. one for each region)
+(iv) gis_region.py --> generates regional cloropleth maps of Chile (i.e. one for each region)
 			 showing income distribution within each region (quintiles of income)		
 
 We also have in this folder the output data from the previous scripts:
