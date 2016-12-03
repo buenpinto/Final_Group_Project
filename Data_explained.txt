@@ -31,9 +31,9 @@ The folder also contains some python scripts, that were used to:
                             file to use on our "Cross sectional" section. (see 
 			    "display_cross_sectional" and "cross_sectional2013" 
 			    views on views.py)
-(iii) gis.py -->       generates a map of Chile as "map_county_code.png" that shows the given 
-		         county (the "selected" county) in a different color.
-(iv) gis_region.py --> generates regional cloropleth maps of Chile (i.e. one for each region)
+(iii) gis.py -->       generates 333 maps of Chile as "map_county_code.png" that show the given 
+		         county (i.e. the "selected" county) in a different color than the other counties.
+(iv) gis_region.py --> generates 13 regional cloropleth maps (i.e. one for each region in Chile)
 			 showing income distribution within each region (quintiles of income)		
 
 We also have in this folder the output data from the previous scripts:
